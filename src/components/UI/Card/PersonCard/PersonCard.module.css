@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+}
+
+.image {
+    width: 32px;
+    border-radius: 10%;
+}
+
+.descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    justify-content: center;
+}
+
+.favoriteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: gold;
+    margin-top: -12px;
+    outline: none;
+    align-self: flex-start;
+    padding: 0;
+}
+
+.favoriteButton:hover {
+    color: orange;
+}
