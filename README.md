@@ -1,11 +1,13 @@
 
+# Demo: https://exquisite-piroshki-27ea08.netlify.app/
+
 # Tech Design Guidelines
 
 ## 1. How to Run the Application
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/AlexMiroBir/bond-sports-ui
+   git clone https://github.com/AlexMiroBir/bond-sports-ui.git
    cd bond-sports-ui
    ```
 
