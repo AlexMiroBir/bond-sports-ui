@@ -38,7 +38,7 @@ const CharactersList: React.FC<Props> = (
                 setIsLoading(true);
                 const query = `https://swapi.dev/api/people/?page=${page}`
                 const searchQuery = `https://swapi.dev/api/people/?search=${debouncedSearchTerm}`;
-                const response = await fetch(searchTerm ? searchQuery : query);
+                const response = await fetch(debouncedSearchTerm ? searchQuery : query);
                 const data = (await response.json()).results;
                 const transformedData = await transformApiData(data);
                 setPeople(transformedData);
