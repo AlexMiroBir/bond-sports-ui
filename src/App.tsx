@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './App.module.css';
 import MainPage from "./pages/MainPage/MainPage";
 
 function App() {
-    const [isNightMode, setIsNightMode] = useState<boolean>(true);
-
-    const toggleTheme = ():void => {
-        setIsNightMode(prevMode => !prevMode);
+    const getInitialTheme = (): boolean => {
+        const savedTheme = localStorage.getItem('isNightMode');
+        return savedTheme ? JSON.parse(savedTheme) : true;
     };
+
+    const [isNightMode, setIsNightMode] = useState<boolean>(getInitialTheme);
+
+    const toggleTheme = (): void => {
+        setIsNightMode(prevMode => {
+            const newMode = !prevMode;
+            localStorage.setItem('isNightMode', JSON.stringify(newMode));
+            return newMode;
+        });
+    };
+
+    useEffect(() => {
+        localStorage.setItem('isNightMode', JSON.stringify(isNightMode));
+    }, [isNightMode]);
 
     return (
         <div

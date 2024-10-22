@@ -5,7 +5,7 @@ import Card from "../UI/Card/Card";
 import {transformApiData} from "../../utils/fetch";
 import {Character} from "../../types/Character";
 
-interface LeftSideBarProps {
+interface Props {
     people: Character[];
     setPeople: (people: Character[]) => void;
     favorites: Character[];
@@ -18,7 +18,7 @@ const MAX_PAGE = 9;
 const DEBOUNCE_DELAY = 500;
 
 
-const CharactersList: React.FC<LeftSideBarProps> = (
+const CharactersList: React.FC<Props> = (
     {
         people,
         setPeople,
@@ -36,7 +36,9 @@ const CharactersList: React.FC<LeftSideBarProps> = (
         const fetchData = async () => {
             try {
                 setIsLoading(true);
-                const response = await fetch(`https://swapi.dev/api/people/?page=${page}`);
+                const query = `https://swapi.dev/api/people/?page=${page}`
+                const searchQuery = `https://swapi.dev/api/people/?search=${debouncedSearchTerm}`;
+                const response = await fetch(searchTerm ? searchQuery : query);
                 const data = (await response.json()).results;
                 const transformedData = await transformApiData(data);
                 setPeople(transformedData);
@@ -48,7 +50,7 @@ const CharactersList: React.FC<LeftSideBarProps> = (
         };
 
         fetchData();
-    }, [page, setPeople]);
+    }, [page, setPeople, debouncedSearchTerm]);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -74,10 +76,6 @@ const CharactersList: React.FC<LeftSideBarProps> = (
         setSearchTerm(event.target.value);
     };
 
-    const filteredPeople = people.filter(person =>
-        person.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-    );
-
     return (
         <Card variant={'characters'}>
             <input
@@ -92,7 +90,7 @@ const CharactersList: React.FC<LeftSideBarProps> = (
                 <h1>Loading...</h1>
             ) : (
                 <>
-                    {filteredPeople.map((person) => (
+                    {people.map((person) => (
                         <PersonCard
                             key={person.id}
                             person={person}
